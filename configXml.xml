@@ -40,6 +40,20 @@
                     </escritorio>
                 </listaEscritorios>
             </puntoAtencion>
+            <puntoAtencion id="03">
+                <nombre> Sucursal 3 </nombre>
+                <direccion> Guatemala </direccion>
+                <listaEscritorios>
+                    <escritorio id="4">
+                        <identificacion> d </identificacion>
+                        <encargado> SAMUEL </encargado>
+                    </escritorio>
+                    <escritorio id="5">
+                        <identificacion> e </identificacion>
+                        <encargado> EZEQUIEL </encargado>
+                    </escritorio>
+                </listaEscritorios>
+            </puntoAtencion>
         </listaPuntosAtencion>
         <listaTransacciones>
             <transaccion id="0101">

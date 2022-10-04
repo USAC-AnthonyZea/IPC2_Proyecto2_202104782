@@ -1,26 +1,44 @@
 # Creamos clase Nodo, para todas las listas
 class Nodo():
-    def __init__(self, dato = None, siguiente = None):
+    def __init__(self, dato, pos) -> None:
         self.dato = dato
-        self.siguiente = siguiente
+        self.pos = pos
+        self.siguiente = None
 
 # Creamos clase para empresas
 class Empresas():
 
-    def __init__(self, id, nombre, abreviatura):
+    def __init__(self, id, nombre, abreviatura, lista_puntos_atencion, lista_transacciones):
         self.id = id
         self.nombre = nombre
         self.abreviatura = abreviatura
-        self.lista_punto_atencion = Lista_enlazada()
-        self.lista_transacciones = Lista_enlazada()
+        self.lista_puntos_atencion = lista_puntos_atencion
+        self.lista_transacciones = lista_transacciones
+
+    def imprimir_empresa(self):
+
+         return f'''
+        ID: {self.id}
+        Empresa: {self.nombre}
+        Abreviatura: {self.abreviatura}
+        _______________________________
+            '''
 
 # Creamos clase para puntos de atencion
 class Puntos_atencion():
-    def __init__(self, id_punto, nombre_punto, direccion_punto):
+    def __init__(self, id_punto, nombre_punto, direccion_punto, lista_escritorios):
         self.id_punto = id_punto
         self.nombre_punto = nombre_punto
         self.direccion = direccion_punto
-        self.lista_escritorios = Lista_enlazada()
+        self.lista_escritorios = lista_escritorios
+
+    def imprimir_punto_atencion(self):
+        return f'''
+    ID: {self.id_punto}
+    Punto de Atencion: {self.nombre_punto}
+    Direccion: {self.direccion}
+    _______________________________
+        '''
 
 # Creamos clara para trasnacciones
 class Transacciones():
@@ -28,36 +46,62 @@ class Transacciones():
         self.id_trans = id_trans
         self.nombre_trans = nombre_trans
         self.tiempo_trans = tiempo_trans
+    
+    def imprimir_punto_atencion(self):
+        return f'''
+    ID: {self.id_trans}
+    Nombre: {self.nombre_trans}
+    Tiempo de Atencion: {self.tiempo_trans}
+    _______________________________
+        '''
 
 class Escritorios():
     def __init__(self, id_escritorio, identificacion, encargado):
         self.id_escritorio = id_escritorio
         self.identificacion = identificacion
         self.encargado = encargado
+    
+    def imprimir_escritorio(self):
+        return f'''
+    ID: {self.id_escritorio}
+    Identificacion: {self.identificacion}
+    Encargado: {self.encargado}
+    _______________________________
+        '''
         
 # ---------------- Aqui viene todo el TDA (Linked List) -------------------- #
 class Lista_enlazada():
 
     def __init__(self) -> None:
-        self.raiz = None # Definimos la cabeza
+        self.raiz = None
+        self.size = 0
     
     # Metodo para agregar datos al inicio
-    def append_inicio(self, dato_):
-        self.raiz = Nodo(dato = dato_, siguiente = self.raiz)
+    def append_inicio(self, dato):
+        if self.raiz == None:
+            self.raiz = Nodo(dato, self.size)
+        else:
+            aux = self.raiz
+            while aux.siguiente != None:
+                aux = aux.siguiente
+            aux.siguiente = Nodo(dato, self.size)
+            
+        self.size += 1
 
     # Metodo para agregar datos al final
-    def append_final(self, dato_):
+    def append_final(self, dato):
         if not self.raiz:
-            self.raiz = Nodo(dato = dato_)
+            self.raiz = Nodo(dato = dato)
             return
         actual = self.raiz
         while actual.siguiente:
             actual = actual.siguiente
-        actual.siguiente = Nodo(dato = dato_)
+        actual.siguiente = Nodo(dato = dato)
 
-    # Método para imprimir la lista de nodos
-    def imprimir_lista(self, llave):
-        nodo = self.raiz
-        while nodo != None:
-            print(getattr(nodo.dato, llave), " => ")
-            nodo = nodo.siguiente
+    def get_Valor(self, indice):
+        aux = self.raiz
+        while aux is not None:
+            if aux.pos == indice:
+                return aux.dato
+            aux = aux.siguiente
+        return None
