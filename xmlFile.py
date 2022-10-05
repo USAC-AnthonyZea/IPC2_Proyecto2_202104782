@@ -1,13 +1,13 @@
 import xml.etree.cElementTree as ET
-from main import *
+from testInit import *
 from configInit import *
+from main import *
 
 class XML_entry():
 
-    def config_System():
-        root = 'prueba1.xml' #Ruta del archivo
-
-        tree = ET.parse(root) #Parseas el archivo Xml
+    def config_System(archivo):
+        
+        tree = ET.parse(archivo) #Parseas el archivo Xml
         empresas = tree.getroot() # Obtener la lista de empresas
 
         empresas_listaEnlazada = Lista_enlazada()
@@ -43,7 +43,7 @@ class XML_entry():
                             identify_escritorio = escritorio.find('identificacion').text # Obtenemos identificaion de escritorio
                             encargado_escritorio = escritorio.find('encargado').text # Obtenemos al encargado del escritorio
 
-                            nuevo_Escritorio = Escritorios(id_escritorio, identify_escritorio, encargado_escritorio) # Objeto de la clase Escritorios
+                            nuevo_Escritorio = Escritorios(id_escritorio, identify_escritorio, encargado_escritorio, False) # Objeto de la clase Escritorios
                             escritorios_listaEnlazada.append_inicio(nuevo_Escritorio) #Lo añadimos a la lista elazada
                     
                     nuevo_punto_atencion = Puntos_atencion(id_punto, nombre_punto, direccion, escritorios_listaEnlazada) # Objeto de la clase Punto de atencion
@@ -63,6 +63,9 @@ class XML_entry():
             nueva_empresa = Empresas(id_empresa, nombre_empresa, abreviatura, puntos_de_atencion_listaEnlazada, transacciones_listaEnlazada) # Objeto de la clase Transaccion
             empresas_listaEnlazada.append_inicio(nueva_empresa) # Lo añadimos a la lista enlazada
   
+
+            return empresas_listaEnlazada
+
         # Imprimimos valores del primer archivo
         for i in range(empresas_listaEnlazada.size): # Iteramos en el tamaño de la lista de empresas
             empresa = empresas_listaEnlazada.get_Valor(i) #Obtenemos el nodo 'i', el cual es un objeto de la clase empresa
@@ -96,12 +99,11 @@ class XML_entry():
         Transaccion: {l + 1}
         {transaction.imprimir_punto_atencion()}
                 ''')
+            
 
+    def test_System(archivo):
 
-    def test_System():
-        root = 'prueba2.xml' #Ruta del archivo
-
-        tree = ET.parse(root) #Parseas el archivo Xml
+        tree = ET.parse(archivo) #Parseas el archivo Xml
         configuraciones_iniciales = tree.getroot() # Obtener la lista de la configuracion inicial
 
         config_inicial_listaEnlazada = Lista_enlazada()
@@ -144,6 +146,8 @@ class XML_entry():
             new_configInicial = Configuracion_inicial(id_config, id_empresa, id_punto, escritorios_activos_listaEnlaxada, clientes_listaEnlazada)
             config_inicial_listaEnlazada.append_inicio(new_configInicial)
 
+            return config_inicial_listaEnlazada
+
     
-XML_entry.config_System()
-XML_entry.test_System()
+#XML_entry.config_System()
+#XML_entry.test_System()
