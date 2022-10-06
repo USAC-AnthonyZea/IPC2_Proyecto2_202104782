@@ -13,7 +13,7 @@ class Escritorios_activos():
         self.id_escritorio = id_escritorio
 
     def imprimir_escritorios_activos(self):
-        return {self.id_escritorio}
+        return f'''{self.id_escritorio}'''
 
 # Clase para los clientes que estaran dentro de la fila de espera
 class Clientes():
@@ -23,7 +23,10 @@ class Clientes():
         self.listado_transacciones = listado_transacciones
 
     def imprimir_cliente(self):
-        return f'''Atendiendo a: {self.nombre_cliente}'''
+        return f'''{self.nombre_cliente}'''
+
+    def imprimir_consola(self):
+        return f'''----> El cliente {self.nombre_cliente} con DPI: {self.dpi}, esta siendo atendido en el escritorio con ID: '''
 
 # Clase para las transacciones que realizaran cada uno de los clientes
 class Transaccion_cliente():

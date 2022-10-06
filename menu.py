@@ -28,11 +28,16 @@ class App():
                 print("2. Cargar archivo de configuración del sistema")
                 print("3. Crear Nueva empresa")
                 print("4. Cargar archivo con configuración Inicial para la prueba")
-                opcion_1 = input(Style.NORMAL + Fore.GREEN +'\nIngrese la operacion que desea realizar: ')
+                opcion_1 = input(Style.NORMAL + Fore.GREEN +'\nIngrese la operacion que desea realizar: ' + Style.RESET_ALL + Fore.RESET)
 
                 ## Limpiar el sistema, borrar todo el contenido de las listas 
                 if opcion_1 == '1':
                     print('Limpiando el sistema')
+                    lista_vacia = Lista_enlazada()
+                    config_init = lista_vacia
+                    prueba_init = lista_vacia
+
+                    print('Limpieza realizada')
 
                 ## Opcion 2: cargar el archivo de la configuracion inicial
                 elif opcion_1 == '2':
@@ -42,7 +47,6 @@ class App():
                         archivo = input(Style.NORMAL + Fore.GREEN +'\nIngrese el nombre del archivo (nombreArchivo.xml): ')
                         
                         config_init = XML_entry.config_System(archivo)
-                        print(config_init)
 
                         print(Style.BRIGHT + Fore.CYAN + '\n\tArchivo cargado correctamente')
 
@@ -140,8 +144,6 @@ class App():
                         
                         prueba_init = XML_entry.test_System(archivo)
 
-                        print(prueba_init)
-
                         print(Style.BRIGHT + Fore.CYAN + '\n\tArchivo cargado correctamente')
 
                         add_file_init = input(Style.NORMAL + Fore.LIGHTMAGENTA_EX +'\n¿Desea agregar otro archivo? (Si o No): '+ Fore.WHITE)
@@ -158,12 +160,7 @@ class App():
                 print("b) Seleccione el punto de atención: ")
 
             elif opcion == '3':
-                print('\n---------------- Manejo de puntos de atención -----------------------')
-                print("\n1. Ver estado del punto de atencion")
-                print("2. Activar o Desactivar escritorio de servicio (1 ó 0, respectivamente)")
-                print("3. Atender Cliente")
-                print("4. Solicitud de Atención" + Fore.RESET + Style.RESET_ALL)
-
+                print('\n---------------- Simulacion atencion al cliente ----------------------- ' + Fore.RESET + Style.RESET_ALL)
                 Logica.Asignacion(config_init, prueba_init)
                 
             elif opcion == '4':

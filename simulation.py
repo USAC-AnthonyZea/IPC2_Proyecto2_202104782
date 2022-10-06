@@ -1,11 +1,14 @@
 from main import *
+from grafico import Graphviz
+import os
 
 class Logica():
 
     def Asignacion(lista_config, lista_prueba):
 
         n_t = 0
-        n_f = 0
+        n_c = 0
+        n_e = 0
 
         # Iteramos en la lista de configuraciones
         for i in range(lista_prueba.size):
@@ -39,12 +42,10 @@ class Logica():
                                     if id_desk_config == id_desk_prueba:
                                         obj_desk_config.estado = True
                                         n_t += 1
-                                    else:
-                                        n_f += 1
-
-                                print(obj_desk_config.imprimir_escritorio())
+                                n_e += 1
 
         lista_cola_clientes = Lista_enlazada() # Creamos una cola para los clientes
+        lista_pila_desk = Lista_enlazada()
         
         # Iteramos en la lista de configuraciones
         for i in range(lista_prueba.size):
@@ -70,21 +71,64 @@ class Logica():
                             for j in range(obj_prueba.listado_clientes.size):
 
                                 new_cliente = obj_prueba.listado_clientes.get_Valor(j)
-                                lista_cola_clientes.append_inicio(new_cliente)
+                                lista_cola_clientes.append_inicio(new_cliente) # Creamos la cola para los clientes
 
-        
-        print('Clientes en Cola:')
-        for i in range(lista_cola_clientes.size):
+                                n_c += 1
+                            
+                            for m in range(obj_puntos_config.lista_escritorios.size):
+
+                                desk_activo = obj_puntos_config.lista_escritorios.get_Valor(m)
+
+                                if desk_activo.estado == True:
+                                    lista_pila_desk.append_inicio(desk_activo)
+                                    
+
+        print('----------- Clientes en Cola: ---------')
+        print(f'Clientes en cola: {n_c}')
+        print(f' - Escritorios totales: {n_e}')
+        print(f' - Escritorios activos: {n_t}')
+        print(f' - Escritorios inactivos: {n_e - n_t}')
+
+        print('\nSimulacion: ')
+
+        verify_simulate = True
+        while verify_simulate:
+            for i in range(lista_cola_clientes.size): # Iteramos en la lista de clientes
+
+                obj_clase_cliente = lista_cola_clientes.get_Valor(i)
             
-            lista_cola_clientes.imprimir_lista('nombre_cliente')
+                for j in range(lista_pila_desk.size): # Iteramos en la lista de escritorios activos
+                    
+                    obj_desk_activo = lista_pila_desk.get_Valor(j) # Obtenemos el objeto del escritorio
+                    estado_desk_activo = obj_desk_activo.estado # Obtenemos el estado, para ver si es activo o inactivo
 
-            obj_cliente = lista_cola_clientes.obtener_primer_nodo()
+                    for k in range(lista_cola_clientes.size): # Iteramos en la lista de clientes
+                        
+                        if estado_desk_activo == True: # Validamos que sea un escritorio activo
+                            
+                            lista_cola_clientes.imprimir_lista('nombre_cliente')
 
-            print(f'{obj_cliente.dato.imprimir_cliente()}')
+                            obj_cliente = lista_cola_clientes.obtener_primer_nodo()
+
+                            print(f'{obj_cliente.dato.imprimir_consola()}{obj_desk_activo.imprimir_escritorio()}')
+                            
+                            #Graphviz.graficar(lista_cola_clientes, lista_pila_desk)
+                            break
+
+                if lista_cola_clientes.vacio():
+                    print('\n\tla simulacion finalizo')
+                    verify_simulate = False
+                    break
 
             if lista_cola_clientes.vacio():
                 print('\n\tla simulacion ha terminado')
+                verify_simulate = False
+                break
+                #Graphviz.graficar(lista_cola_clientes, lista_pila_desk)
+        
+        #Graphviz.graficar(lista_cola_clientes, lista_pila_desk)
 
-            #lista_cola_clientes.imprimir_lista('nombre_cliente')
-
+        if lista_cola_clientes.vacio():
+                print('\n\tla simulacion ha terminado')
+                #Graphviz.graficar(lista_cola_clientes, lista_pila_desk)
 

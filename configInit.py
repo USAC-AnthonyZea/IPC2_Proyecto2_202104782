@@ -40,7 +40,7 @@ class Transacciones():
         self.nombre_trans = nombre_trans
         self.tiempo_trans = tiempo_trans
     
-    def imprimir_punto_atencion(self):
+    def imprimir_transaccion(self):
         return f'''
     ID: {self.id_trans}
     Nombre: {self.nombre_trans}
@@ -56,10 +56,5 @@ class Escritorios():
         self.estado = estado
     
     def imprimir_escritorio(self):
-        return f'''
-    ID: {self.id_escritorio}
-    Identificacion: {self.identificacion}
-    Encargado: {self.encargado}
-    Estado: {self.estado}
-    _______________________________
-        '''
+        return f'''{self.id_escritorio} por {self.encargado}'''
+        
