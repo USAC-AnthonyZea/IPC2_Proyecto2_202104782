@@ -4,6 +4,7 @@ from main import Lista_enlazada
 from configInit import *
 from simulation import Logica
 
+#Clase Principal
 class App():
     def __init__(self):
         aux = True
@@ -11,6 +12,8 @@ class App():
         # Menu principal
         while aux:
             # Creacion del Menu
+
+
             print(Style.BRIGHT + Fore.WHITE + '\n-------- Soluciones Guatemaltecas, S.A -----------')
             print(Style.BRIGHT + Fore.YELLOW + '_Bienvenido al sistema:_\n')
 
